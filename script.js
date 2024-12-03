@@ -1,80 +1,104 @@
-// Select the elements for 'genocide' and 'war' sections
-const democratElement = document.getElementById('genocide');
-const iframeElement = document.getElementById('genocideWeb');
+document.addEventListener("DOMContentLoaded", () => {
+    const mainContainer = document.getElementById("mainContainer");
+    const words = document.querySelectorAll(".word");
+    const alignButton = document.getElementById("alignButton");
+    let aligned = false;
 
-const warElements = document.getElementById('republican'); // Select all elements with class 'war'
-const warIframeElement = document.getElementById('warWeb'); // The iframe for 'war'
+    // Function to randomly position words
+    function randomizeWords() {
+        const containerWidth = mainContainer.offsetWidth;
+        const containerHeight = mainContainer.offsetHeight;
 
-// Log the selected elements for debugging
-console.log('Democrat element:', democratElement);
-console.log('Iframe element:', iframeElement);
-console.log('War elements:', warElements);
-console.log('War iframe element:', warIframeElement);
+        words.forEach(word => {
+            const randomX = Math.random() * (containerWidth - word.offsetWidth);
+            const randomY = Math.random() * (containerHeight - word.offsetHeight);
+            word.style.left = `${randomX}px`;
+            word.style.top = `${randomY}px`;
+        });
+    }
 
-let isClickedDemocrat = false; // Flag to track click state for 'genocide' section
-let isClickedWar = false; // Flag to track click state for 'war' section
+    // Function to align words into columns and center vertically
+    function alignWords() {
+        const containerWidth = mainContainer.offsetWidth;
+        const containerHeight = mainContainer.offsetHeight;
 
-// Logic for 'genocide' section
-if (democratElement && iframeElement) {
-    console.log('Elements found for genocide:', democratElement, iframeElement);
+        const columnHeights = { left: 0, center: 0, right: 0 };
+        words.forEach(word => {
+            const alignment = word.classList.contains("left")
+                ? "left"
+                : word.classList.contains("center")
+                ? "center"
+                : "right";
+            columnHeights[alignment] += word.offsetHeight + 10;
+        });
 
-    // Hover logic for 'genocide'
-    democratElement.addEventListener('mouseenter', () => {
-        if (!isClickedDemocrat) {
-            iframeElement.style.display = 'block'; // Show iframe on hover
-        }
-    });
+        const maxHeight = Math.max(columnHeights.left, columnHeights.center, columnHeights.right);
+        const verticalOffset = (containerHeight - maxHeight) / 2;
 
-    democratElement.addEventListener('mouseleave', () => {
-        if (!isClickedDemocrat) {
-            iframeElement.style.display = 'none'; // Hide iframe on hover leave
-        }
-    });
+        const currentHeights = { left: verticalOffset, center: verticalOffset, right: verticalOffset };
+        words.forEach(word => {
+            let alignment;
+            if (word.classList.contains("left")) {
+                word.style.left = `${containerWidth * 0.1}px`;
+                alignment = "left";
+            } else if (word.classList.contains("center")) {
+                word.style.left = `${containerWidth * 0.4}px`;
+                alignment = "center";
+            } else if (word.classList.contains("right")) {
+                word.style.left = `${containerWidth * 0.7}px`;
+                alignment = "right";
+            }
+            word.style.top = `${currentHeights[alignment]}px`;
+            currentHeights[alignment] += word.offsetHeight + 10;
+        });
+    }
 
-    // Click logic for 'genocide'
-    democratElement.addEventListener('click', () => {
-        isClickedDemocrat = !isClickedDemocrat; // Toggle click state
-        if (isClickedDemocrat) {
-            iframeElement.style.display = 'block'; // Keep visible on click
+    // Toggle align/randomize functionality
+    alignButton.addEventListener("click", () => {
+        if (aligned) {
+            randomizeWords();
+            alignButton.classList.add("strikethrough");
         } else {
-            iframeElement.style.display = 'none'; // Hide on click
+            alignWords();
+            alignButton.classList.remove("strikethrough");
         }
-        console.log('Iframe visibility toggled for genocide. isClickedDemocrat:', isClickedDemocrat);
+        aligned = !aligned;
     });
-} else {
-    console.error('Required elements for genocide are missing!');
-}
 
-// Logic for 'war' section
-if (warIframeElement) {
-    // Loop over all elements with class 'war'
-    warElements.forEach(warElement => {
-        let isClickedWarLocal = false; // Local flag for individual war element click state
+    // Make words draggable
+    words.forEach(word => {
+        let isDragging = false;
+        let offsetX, offsetY;
 
-        // Hover logic for 'war' elements
-        warElement.addEventListener('mouseenter', () => {
-            if (!isClickedWarLocal) {
-                warIframeElement.style.display = 'block'; // Show iframe on hover
+        word.addEventListener("mousedown", e => {
+            isDragging = true;
+            const rect = word.getBoundingClientRect();
+            offsetX = e.clientX - rect.left;
+            offsetY = e.clientY - rect.top;
+            word.style.zIndex = 1000; // Bring dragged element to the front
+        });
+
+        document.addEventListener("mousemove", e => {
+            if (isDragging) {
+                const containerRect = mainContainer.getBoundingClientRect();
+                const x = e.clientX - containerRect.left - offsetX;
+                const y = e.clientY - containerRect.top - offsetY;
+
+                // Ensure the word stays within the container boundaries
+                word.style.left = `${Math.max(0, Math.min(x, containerRect.width - word.offsetWidth))}px`;
+                word.style.top = `${Math.max(0, Math.min(y, containerRect.height - word.offsetHeight))}px`;
             }
         });
 
-        warElement.addEventListener('mouseleave', () => {
-            if (!isClickedWarLocal) {
-                warIframeElement.style.display = 'none'; // Hide iframe on hover leave
-            }
-        });
-
-        // Click logic for 'war' elements
-        warElement.addEventListener('click', () => {
-            isClickedWarLocal = !isClickedWarLocal; // Toggle click state for each element
-            if (isClickedWarLocal) {
-                warIframeElement.style.display = 'block'; // Keep iframe visible on click
-            } else {
-                warIframeElement.style.display = 'none'; // Hide iframe on click
-            }
-            console.log('Iframe visibility toggled for war. isClickedWarLocal:', isClickedWarLocal);
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+            word.style.zIndex = ""; // Reset z-index
         });
     });
-} else {
-    console.error('Required iframe for war is missing!');
-}
+
+    // Randomize word placement on page load
+    randomizeWords();
+
+    // Initialize button with strike-through
+    alignButton.classList.add("strikethrough");
+});

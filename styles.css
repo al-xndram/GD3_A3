@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    font-family: 'change';
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+button {
+    margin-bottom: 40px;
+    padding: 10px 20px;
+    font-size: 30px;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    font-family: 'change';
+    font-weight: 400;
+}
+
+button:hover {
+    font-style: italic;
+}
+
+button.strikethrough {
+    text-decoration: line-through;
+}
+
+#mainContainer {
+    width: 80vw;
+    height: 70vh;
+    background: #fff;
+    /*border: 2px solid #ccc;*/
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.word {
+    position: absolute;
+    padding: 10px;
+    /*background: #ddd;*/
+    /*border-radius: 5px;*/
+    font-size: 32px;
+    text-align: center;
+    transition: all 0.5s ease;
+    user-select: none;
+    color: white;
+}
+
+
+.word:hover {
+    cursor: grab;
+}
+
+.left:hover {
+    color: blue;
+    background-color: white;
+}
+
+.center:hover {
+    color: rgb(149, 0, 191);
+    background-color: white;
+
+}
+
+.right:hover {
+    color: red;
+    background-color: white;
+
+}
+
+.left { 
+    background-color: blue; 
+    color: white;
+}
+.center { 
+    background-color: rgb(149, 0, 191);
+    color: white;
+}
+.right { 
+    background-color: red; 
+    color: white;
+}
