@@ -29,6 +29,19 @@ button.strikethrough {
     text-decoration: line-through;
 }
 
+.topic {
+    transition: none;
+}
+/* Italicize when hovering */
+.topic:hover {
+    font-style: italic;
+}
+
+/* Style for active topic title */
+.topic.active {
+    font-style: italic;
+}
+
 #mainContainer {
     width: 80vw;
     height: 70vh;
@@ -106,4 +119,48 @@ button.strikethrough {
 .topic-column .topic {
     display: block;
     left: 5%;
+}
+
+/* Blackout background */
+#blackBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    display: none;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Stack elements vertically */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Style for the isolated word */
+.word.isolated {
+    position: relative;
+    font-size: 40px;
+    text-align: center;
+    color: white;
+    background: none;
+    padding: 20px;
+    z-index: 10000;
+    max-width: 80%; /* Limit width to prevent overflow */
+    word-wrap: break-word; /* Handle long words */
+}
+
+/* Style for the nested content (iframe or img) */
+.nested-content {
+    display: none;
+    margin-top: 20px;
+    width: 800px;
+    max-width: 800px;
+    height: 600px;
+    border: none;
+}
+
+.word.isolated .nested-content {
+    display: block; /* Show when isolated */
 }

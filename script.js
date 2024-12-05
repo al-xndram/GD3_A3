@@ -139,6 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const correspondingWords = document.querySelectorAll(`#topic${index + 1}`);
 
         title.addEventListener("mouseover", () => {
+            title.style.fontStyle = "italic"; // Italicize the title
             correspondingWords.forEach(word => {
                 word.style.backgroundColor = "black";
                 word.style.color = "white";
@@ -146,10 +147,103 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         title.addEventListener("mouseout", () => {
+            if (!title.classList.contains("active")) {
+                title.style.fontStyle = "normal"; // Remove italics if not active
+            }
             correspondingWords.forEach(word => {
                 word.style.backgroundColor = "";
                 word.style.color = "";
             });
         });
+
+        // Add click functionality to toggle visibility of corresponding words
+        title.addEventListener("click", () => {
+            title.classList.toggle("active");
+            if (title.classList.contains("active")) {
+                title.style.fontStyle = "italic"; // Keep italic when active
+                correspondingWords.forEach(word => {
+                    word.style.backgroundColor = "black";
+                    word.style.color = "white";
+                });
+
+                // Hide non-corresponding words
+                words.forEach(word => {
+                    if (![...correspondingWords].includes(word)) {
+                        word.style.display = "none";
+                    }
+                });
+            } else {
+                title.style.fontStyle = "normal"; // Remove italics when deactivated
+                correspondingWords.forEach(word => {
+                    word.style.backgroundColor = "";
+                    word.style.color = "";
+                });
+
+                // Show all words again
+                words.forEach(word => {
+                    word.style.display = "";
+                });
+            }
+        });
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const mainContainer = document.getElementById("mainContainer");
+    const words = document.querySelectorAll(".word");
+    const alignButton = document.getElementById("alignButton");
+
+    // Create a black background element
+    const blackBackground = document.createElement("div");
+    blackBackground.id = "blackBackground";
+    document.body.appendChild(blackBackground);
+
+    let isAlignMode = false;
+    let isolatedWord = null;
+
+    // Toggle align mode
+    alignButton.addEventListener("click", () => {
+        isAlignMode = !isAlignMode;
+    });
+
+    // Click on a word to isolate it
+    words.forEach(word => {
+        word.addEventListener("click", (e) => {
+            if (!isAlignMode) return;
+
+            e.stopPropagation(); // Prevent blackBackground click event
+
+            // Save the currently isolated word
+            isolatedWord = word;
+
+            // Move the word to the black background
+            blackBackground.appendChild(word);
+
+            // Reset styles for centering
+            word.style.position = "static";
+            word.style.margin = "0 auto";
+
+            // Apply isolated styles
+            word.classList.add("isolated");
+            blackBackground.style.display = "flex";
+        });
+    });
+
+    // Exit isolated mode when clicking on the black background
+    blackBackground.addEventListener("click", () => {
+        if (isolatedWord) {
+            // Return the word back to the main container
+            mainContainer.appendChild(isolatedWord);
+
+            // Remove isolated styles
+            isolatedWord.style.position = "absolute";
+            isolatedWord.style.margin = "0";
+            isolatedWord.classList.remove("isolated");
+            isolatedWord = null;
+        }
+
+        // Hide the black background
+        blackBackground.style.display = "none";
     });
 });
