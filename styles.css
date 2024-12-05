@@ -89,3 +89,21 @@ button.strikethrough {
     background-color: red; 
     color: white;
 }
+
+/* Hide the topic column initially */
+.topic-column .topic {
+    display: none;
+    position: absolute;
+    padding: 10px;
+    font-size: 32px;
+    color: black;
+    text-align: center;
+    transition: all 0.5s ease;
+    user-select: none;
+}
+
+/* Position topics in a fourth column when visible */
+.topic-column .topic {
+    display: block;
+    left: 5%;
+}

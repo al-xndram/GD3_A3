@@ -2,7 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const mainContainer = document.getElementById("mainContainer");
     const words = document.querySelectorAll(".word");
     const alignButton = document.getElementById("alignButton");
+    const topics = document.querySelectorAll(".topic");
     let aligned = false;
+
+    // Initially hide the topic column divs
+    topics.forEach(topic => {
+        topic.style.display = "none";
+    });
 
     // Function to randomly position words
     function randomizeWords() {
@@ -22,7 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const containerWidth = mainContainer.offsetWidth;
         const containerHeight = mainContainer.offsetHeight;
 
-        const columnHeights = { left: 0, center: 0, right: 0 };
+        const columnHeights = { topic: 0, left: 0, center: 0, right: 0 };
+
+        // Make topics visible and calculate heights
+        topics.forEach(topic => {
+            topic.style.display = "block";
+            columnHeights.topic += topic.offsetHeight + 10;
+        });
+
         words.forEach(word => {
             const alignment = word.classList.contains("left")
                 ? "left"
@@ -32,20 +45,29 @@ document.addEventListener("DOMContentLoaded", () => {
             columnHeights[alignment] += word.offsetHeight + 10;
         });
 
-        const maxHeight = Math.max(columnHeights.left, columnHeights.center, columnHeights.right);
+        const maxHeight = Math.max(...Object.values(columnHeights));
         const verticalOffset = (containerHeight - maxHeight) / 2;
 
-        const currentHeights = { left: verticalOffset, center: verticalOffset, right: verticalOffset };
+        const currentHeights = { topic: verticalOffset, left: verticalOffset, center: verticalOffset, right: verticalOffset };
+
+        // Position topics in a fourth column
+        topics.forEach(topic => {
+            topic.style.left = `${containerWidth * 0.05}px`;
+            topic.style.top = `${currentHeights.topic}px`;
+            currentHeights.topic += topic.offsetHeight + 10;
+        });
+
+        // Position words in their respective columns
         words.forEach(word => {
             let alignment;
             if (word.classList.contains("left")) {
-                word.style.left = `${containerWidth * 0.1}px`;
+                word.style.left = `${containerWidth * 0.2}px`;
                 alignment = "left";
             } else if (word.classList.contains("center")) {
-                word.style.left = `${containerWidth * 0.4}px`;
+                word.style.left = `${containerWidth * 0.5}px`;
                 alignment = "center";
             } else if (word.classList.contains("right")) {
-                word.style.left = `${containerWidth * 0.7}px`;
+                word.style.left = `${containerWidth * 0.8}px`;
                 alignment = "right";
             }
             word.style.top = `${currentHeights[alignment]}px`;
@@ -56,10 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle align/randomize functionality
     alignButton.addEventListener("click", () => {
         if (aligned) {
+            topics.forEach(topic => (topic.style.display = "none"));
             randomizeWords();
             alignButton.classList.add("strikethrough");
         } else {
             alignWords();
+            topics.forEach(topic => (topic.style.display = "block"));
             alignButton.classList.remove("strikethrough");
         }
         aligned = !aligned;
@@ -101,4 +125,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize button with strike-through
     alignButton.classList.add("strikethrough");
+
+    // Hover effect for topic titles and corresponding word divs
+    const topicTitles = [
+        "topic1title", "topic2title", "topic3title", 
+        "topic4title", "topic5title", "topic6title"
+    ];
+
+    topicTitles.forEach((titleId, index) => {
+        const title = document.getElementById(titleId);
+
+        // Select all corresponding "topic" divs
+        const correspondingWords = document.querySelectorAll(`#topic${index + 1}`);
+
+        title.addEventListener("mouseover", () => {
+            correspondingWords.forEach(word => {
+                word.style.backgroundColor = "black";
+                word.style.color = "white";
+            });
+        });
+
+        title.addEventListener("mouseout", () => {
+            correspondingWords.forEach(word => {
+                word.style.backgroundColor = "";
+                word.style.color = "";
+            });
+        });
+    });
 });
