@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const correspondingWords = document.querySelectorAll(`#topic${index + 1}`);
 
         title.addEventListener("mouseover", () => {
-            title.style.fontStyle = "italic"; // Italicize the title
+            //title.style.fontStyle = "italic"; // Italicize the title
             correspondingWords.forEach(word => {
                 word.style.backgroundColor = "black";
                 word.style.color = "white";
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         title.addEventListener("mouseout", () => {
             if (!title.classList.contains("active")) {
-                title.style.fontStyle = "normal"; // Remove italics if not active
+            //    title.style.fontStyle = "normal"; // Remove italics if not active
             }
             correspondingWords.forEach(word => {
                 word.style.backgroundColor = "";
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
         title.addEventListener("click", () => {
             title.classList.toggle("active");
             if (title.classList.contains("active")) {
-                title.style.fontStyle = "italic"; // Keep italic when active
+               // title.style.fontStyle = "italic"; // Keep italic when active
                 correspondingWords.forEach(word => {
                     word.style.backgroundColor = "black";
                     word.style.color = "white";
