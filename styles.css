@@ -1,9 +1,9 @@
 body {
     margin: 0;
+    padding: 0;
     font-family: 'change';
     font-weight: 500;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
@@ -11,6 +11,9 @@ body {
 }
 
 button {
+    position: absolute;
+    top: 10px;
+    left: 50%;
     margin-bottom: 40px;
     padding: 10px 20px;
     font-size: 30px;
@@ -21,6 +24,10 @@ button {
     font-weight: 400;
 }
 
+#topButtons {
+    top: 10px;
+}
+
 button:hover {
     font-style: italic;
 }
@@ -29,27 +36,27 @@ button.strikethrough {
     text-decoration: line-through;
 }
 
-#mainContainer {
-    width: 80vw;
-    height: 70vh;
-    background: #fff;
-    /*border: 2px solid #ccc;*/
-    border-radius: 10px;
+.center-container {
     position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
+    display: none; /* Hidden by default, only shown when aligned */
+    width: 80%;
+    height: 70%;
+    background-color: white;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr); /* 3 rows */
+    grid-template-columns: repeat(6, 1fr); /* 6 columns */
+    gap: 10px;
     justify-content: center;
     align-items: center;
 }
 
 .word {
-    position: absolute;
-    padding: 10px;
-    /*background: #ddd;*/
-    /*border-radius: 5px;*/
-    font-size: 32px;
     text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: all 0.5s ease;
     user-select: none;
     color: white;
@@ -89,3 +96,137 @@ button.strikethrough {
     background-color: red; 
     color: white;
 }
+
+/* Left-side column styling */
+#topicColumn {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+/* Make the column visible */
+#topicColumn.visible {
+    display: block;
+}
+
+/* Styling for the list */
+/* #topicColumn ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+} */
+
+/* #topicColumn li {
+    margin-bottom: 10px;
+    font-size: 26px;
+    font-weight: 300;
+    color: #333;
+    line-height: 200%;
+} */
+
+/* Black overlay for isolated mode */
+.black-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: none; /* Hidden by default */
+}
+
+#blackOverlay.visible {
+    display: flex; /* Show overlay in visible mode */
+}
+
+.isolated-word {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.hidden-iframe, 
+.hidden-image {
+    display: none;
+}
+
+.hidden-iframe.visible, 
+.hidden-image.visible {
+    display: block;
+    width: 800px;
+    height: 600px;
+    border: none;
+    margin-top: 20px;
+}
+
+/* Add styles for top buttons
+#topButtons {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.topButton {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+#mainContainer {
+    position: relative;
+    margin-top: 60px;  To leave space for top buttons 
+    width: 80%;
+    height: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+#alignButton {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 10px;
+}
+
+#topicColumn {
+    position: fixed;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+#blackOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    z-index: 999;
+}
+
+.hidden {
+    display: none;
+} */
+
+/* Broadcasting stations styling */
+.broadcast-station {
+    position: absolute;
+    display: none; /* Hidden by default */
+}
+

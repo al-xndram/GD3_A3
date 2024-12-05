@@ -7,30 +7,85 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://use.typekit.net/mup5ixt.css">
 </head>
+
 <body>
-    <button id="alignButton">align</button>
-    <div id="mainContainer">
-        <div class="word left">Equity</div>
-        <div class="word left">Social Justice</div>
-        <div class="word left">Intersectionality</div>
-        <div class="word left">Anti-racism</div>
-        <div class="word left">LGBTQ+ Rights</div>
+
+    <div id="topButtons">
+        <button id="cellButton" class="topButton">Cell</button>
+        <button id="organButton" class="topButton">Organ</button>
+        <button id="organismButton" class="topButton">Organism</button>
+    </div>
+
+    <div id="topicColumn" class="topic-column">
+        <div class="topic">Israel/Gaza</div>
+        <div class="topic">Economics</div>
+        <div class="topic">Identity</div>
+        <div class="topic">Immigration</div>
+        <div class="topic">Climate</div>
+        <div class="topic">Education</div>
+    </div>
+
+
+    <div id="mainContainer" class="center-container">
+
+        <!--leftist-->
+        <div class="word left">Genocide
+            <iframe src="https://www.democracynow.org/2024/11/14/arwa_damon_gaza_healthcare" class="hidden-iframe"></iframe>
+        </div>
+        <div class="word left">Social Infrastructure</div>
+        <div class="word left">Minority Rights</div>
+        <div class="word left">Refugee</div>
+        <div class="word left">Climate Crisis</div>
         <div class="word left">Decolonization</div>
 
-        <div class="word center">Moderation</div>
-        <div class="word center">Bipartisanship</div>
-        <div class="word center">Free Market</div>
-        <div class="word center">Rule of Law</div>
+        <!--centrist-->
+        <div class="word center">War
+            <img src="img/war.png" class="hidden-image">
+        </div>
+        <div class="word center">Government Support</div>
         <div class="word center">Individual Rights</div>
-        <div class="word center">Economic Growth</div>
+        <div class="word center">Immigrant</div>
+        <div class="word center">Climate Change</div>
+        <div class="word center">Reconciliation</div>
 
-        <div class="word right">Patriotism</div>
-        <div class="word right">Traditional Values</div>
-        <div class="word right">Law and Order</div>
-        <div class="word right">Border Security</div>
-        <div class="word right">National Sovereignty</div>
-        <div class="word right">Freedom</div>
+        <!--conservative-->
+        <div class="word right">Hamas Attack
+            <img src="img/Hamas attack.png" class="hidden-image">
+        </div>
+        <div class="word right">Communism
+            <img src="img/communist.png" class="hidden-image">
+        </div>
+        <div class="word right">Woke
+            <img src="img/woke.png" class="hidden-image">
+        </div>
+        <div class="word right">Illegal Alien
+            <img src="img/illegalalien.png" class="hidden-image">
+        </div>
+        <div class="word right">Climate Control
+            <img src="img/climatecontrol.png" class="hidden-image">
+        </div>
+        <div class="word right">Cultural Marxism</div>
+
     </div>
+
+    <button id="alignButton">align</button>
+
+    <div id="blackOverlay" class="black-overlay"></div>
+    <div id="isolatedWord" class="isolated-word"></div>
+
+
+    <div class="broadcast-station hidden">
+        <img src="img/bbclogo.jpg" alt="Broadcast Station 1" />
+    </div>
+    <div class="broadcast-station hidden">
+        <img src="img/democracylogo.png" alt="Broadcast Station 2" />
+    </div>
+    <div class="broadcast-station hidden">
+        <img src="img/foxlogo.png" alt="Broadcast Station 2" />
+    </div>
+
     <script src="script.js"></script>
+
 </body>
+
 </html>
